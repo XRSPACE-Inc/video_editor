@@ -37,14 +37,14 @@ class VideoEditorController extends ChangeNotifier {
   /// Style for [CropGridViewer]
   final CropGridStyle cropStyle;
 
-  /// Video from [File].
-  final File file;
+  /// Video from [Uri].
+  final Uri uri;
 
   /// Constructs a [VideoEditorController] that edits a video from a file.
   ///
-  /// The [file] argument must not be null.
-  VideoEditorController.file(
-    this.file, {
+  /// The [Uri] argument must not be null.
+  VideoEditorController.Uri(
+    this.uri, {
     this.maxDuration = Duration.zero,
     this.minDuration = Duration.zero,
     this.coverThumbnailsQuality = 10,
@@ -52,10 +52,7 @@ class VideoEditorController extends ChangeNotifier {
     this.coverStyle = const CoverSelectionStyle(),
     this.cropStyle = const CropGridStyle(),
     TrimSliderStyle? trimStyle,
-  })  : _video = VideoPlayerController.file(File(
-          // https://github.com/flutter/flutter/issues/40429#issuecomment-549746165
-          Platform.isIOS ? Uri.encodeFull(file.path) : file.path,
-        )),
+  })  : _video = VideoPlayerController.networkUrl(uri),
         trimStyle = trimStyle ?? TrimSliderStyle(),
         assert(maxDuration > minDuration,
             'The maximum duration must be bigger than the minimum duration');
@@ -185,7 +182,7 @@ class VideoEditorController extends ChangeNotifier {
   //VIDEO CONTROLLER//
   //----------------//
 
-  /// Attempts to open the given video [File] and load metadata about the video.
+  /// Attempts to open the given video [Uri] and load metadata about the video.
   ///
   /// Update the trim position depending on the [maxDuration] param
   /// Generate the default cover [_selectedCover]
@@ -385,7 +382,7 @@ class VideoEditorController extends ChangeNotifier {
   /// Generate cover thumbnail at [startTrim] time in milliseconds
   void generateDefaultCoverThumbnail() async {
     final defaultCover = await generateSingleCoverThumbnail(
-      file.path,
+      uri.toString(),
       timeMs: startTrim.inMilliseconds,
       quality: coverThumbnailsQuality,
     );
