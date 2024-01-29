@@ -256,14 +256,18 @@ class TrimSliderPainter extends CustomPainter {
       ..color = style.positionLineColor
       ..strokeWidth = style.positionLineWidth;
 
+    const double lineHeight = 11;
+    const double lineWidth = 3;
+
     // DRAW VIDEO INDICATOR
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromPoints(
-          Offset(position - style.positionLineWidth / 2, -style.lineWidth * 2),
+          Offset(position - style.positionLineWidth / lineWidth,
+              -style.lineWidth * lineHeight),
           Offset(
-            position + style.positionLineWidth / 2,
-            size.height + style.lineWidth * 2,
+            position + style.positionLineWidth / lineWidth,
+            size.height + style.lineWidth * lineHeight,
           ),
         ),
         Radius.circular(style.positionLineWidth),

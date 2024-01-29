@@ -10,9 +10,9 @@ class TrimSliderStyle {
     this.positionLineColor = Colors.white,
     this.positionLineWidth = 4,
     this.lineColor = Colors.white60,
-    this.onTrimmingColor = kDefaultSelectedColor,
+    this.onTrimmingColor = Colors.white38,
     this.onTrimmedColor = kDefaultSelectedColor,
-    this.lineWidth = 2,
+    this.lineWidth = 3,
     this.borderRadius = 5.0,
     // edges
     this.edgesType = TrimSliderEdgesType.bar,
