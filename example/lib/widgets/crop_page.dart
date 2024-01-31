@@ -15,22 +15,6 @@ class CropPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30),
           child: Column(children: [
-            Row(children: [
-              Expanded(
-                child: IconButton(
-                  onPressed: () =>
-                      controller.rotate90Degrees(RotateDirection.left),
-                  icon: const Icon(Icons.rotate_left),
-                ),
-              ),
-              Expanded(
-                child: IconButton(
-                  onPressed: () =>
-                      controller.rotate90Degrees(RotateDirection.right),
-                  icon: const Icon(Icons.rotate_right),
-                ),
-              )
-            ]),
             const SizedBox(height: 15),
             Expanded(
               child: CropGridViewer.edit(
