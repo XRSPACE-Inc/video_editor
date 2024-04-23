@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_editor/src/controller.dart';
+import 'package:video_editor/src/widgets/trim/static_image_slider.dart';
 import 'package:video_editor/src/widgets/trim/thumbnail_slider.dart';
 import 'package:video_editor/src/widgets/trim/trim_slider_painter.dart';
 
@@ -22,7 +23,14 @@ class TrimSlider extends StatefulWidget {
     this.hasHaptic = true,
     this.maxViewportRatio = 2.5,
     this.scrollController,
+    this.staticImagePath = '',
   });
+
+  /// The [staticImagePath] param indicate that a static image is used to fill into the timeline body repeated instead of
+  /// the video thumbnails
+  ///
+  /// /// Defaults to ''
+  final String staticImagePath;
 
   /// The [controller] param is mandatory so every change in the controller settings will propagate in the trim slider view
   final VideoEditorController controller;
@@ -598,10 +606,16 @@ class _TrimSliderState extends State<TrimSlider>
                         child: SizedBox(
                           height: widget.height,
                           width: _fullLayout.width,
-                          child: ThumbnailSlider(
-                            controller: widget.controller,
-                            height: widget.height,
-                          ),
+                          child: widget.staticImagePath != ''
+                              ? StaticImageSlider(
+                                  controller: widget.controller,
+                                  height: widget.height,
+                                  imagePath: widget.staticImagePath,
+                                )
+                              : ThumbnailSlider(
+                                  controller: widget.controller,
+                                  height: widget.height,
+                                ),
                         ),
                       ),
                       if (widget.child != null)
