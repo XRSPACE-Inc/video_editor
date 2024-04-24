@@ -13,10 +13,14 @@ class StaticImageSlider extends StatefulWidget {
     required this.controller,
     required this.imagePath,
     this.height = 60,
+    this.width = 60,
   });
 
-  /// The [height] param specifies the height of the generated thumbnails
+  /// The [width, height] param specifies the width,height of component if failed to load image
+  ///
+  /// Default to 60
   final double height;
+  final double width;
 
   /// The [imagePath] param specified the path of the image to be filled in repeatedly inside the timeline body
   final String imagePath;
@@ -49,7 +53,7 @@ class _StaticImageSliderState extends State<StaticImageSlider> {
     final byteData = await rootBundle.load(imagePath);
     final img = dart_image.decodeImage(byteData.buffer.asUint8List());
     setState(() {
-      imageWidth = img?.width ?? widget.height.toInt();
+      imageWidth = img?.width ?? widget.width.toInt();
       imageHeight = img?.height ?? widget.height.toInt();
     });
   }
