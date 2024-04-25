@@ -36,17 +36,10 @@ class _StaticImageSliderState extends State<StaticImageSlider> {
   int imageWidth = 0;
   int imageHeight = 0;
 
-  final _spaceWidth = 4.0;
-
   @override
   void initState() {
     super.initState();
     getImageDimensions(widget.imagePath);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   Future<void> getImageDimensions(String imagePath) async {
@@ -65,20 +58,19 @@ class _StaticImageSliderState extends State<StaticImageSlider> {
     }
 
     final screenWidth = MediaQuery.of(context).size.width;
-    final int imageCount = (screenWidth / imageWidth).floor();
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: List.generate(
-          imageCount,
-          (index) => Image(
-            image: AssetImage(widget.imagePath),
-            width: imageWidth.toDouble(),
-            height: imageHeight.toDouble(),
-          ),
-        ).fold<List<Widget>>(
-            [], (acc, img) => acc..addAll([img, SizedBox(width: _spaceWidth)])),
+        children: <Widget>[
+          Container(
+            child: Image.asset(
+              widget.imagePath,
+              width: screenWidth,
+              height: imageHeight.toDouble(),
+              repeat: ImageRepeat.repeatX,
+            ),
+          )
+        ],
       ),
     );
   }

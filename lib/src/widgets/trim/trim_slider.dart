@@ -606,7 +606,7 @@ class _TrimSliderState extends State<TrimSlider>
                         child: SizedBox(
                           height: widget.height,
                           width: _fullLayout.width,
-                          child: widget.staticImagePath != ''
+                          child: widget.staticImagePath.isNotEmpty
                               ? StaticImageSlider(
                                   controller: widget.controller,
                                   width: _fullLayout.width,
