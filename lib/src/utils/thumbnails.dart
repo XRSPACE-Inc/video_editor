@@ -9,7 +9,7 @@ Stream<List<Uint8List>> generateTrimThumbnails(
   VideoEditorController controller, {
   required int quantity,
 }) async* {
-  final String path = controller.uri.toString();
+  final String path = controller.path;
   final double eachPart = controller.videoDuration.inMilliseconds / quantity;
   List<Uint8List> byteList = [];
 
@@ -45,7 +45,7 @@ Stream<List<CoverData>> generateCoverThumbnails(
   for (int i = 0; i < quantity; i++) {
     try {
       final CoverData bytes = await generateSingleCoverThumbnail(
-        controller.uri.toString(),
+        controller.path,
         timeMs: (controller.isTrimmed
                 ? (eachPart * i) + controller.startTrim.inMilliseconds
                 : (eachPart * i))
