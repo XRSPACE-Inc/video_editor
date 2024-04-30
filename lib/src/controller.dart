@@ -38,13 +38,13 @@ class VideoEditorController extends ChangeNotifier {
   final CropGridStyle cropStyle;
 
   /// Video from [Uri].
-  final Uri uri;
+  final String path;
 
   /// Constructs a [VideoEditorController] that edits a video from a file.
   ///
   /// The [Uri] argument must not be null.
   VideoEditorController.Uri(
-    this.uri, {
+    Uri uri, {
     this.maxDuration = Duration.zero,
     this.minDuration = Duration.zero,
     this.coverThumbnailsQuality = 10,
@@ -53,6 +53,25 @@ class VideoEditorController extends ChangeNotifier {
     this.cropStyle = const CropGridStyle(),
     TrimSliderStyle? trimStyle,
   })  : _video = VideoPlayerController.networkUrl(uri),
+        path = uri.toString(),
+        trimStyle = trimStyle ?? TrimSliderStyle(),
+        assert(maxDuration > minDuration,
+            'The maximum duration must be bigger than the minimum duration');
+
+  VideoEditorController.File(
+    File file, {
+    this.maxDuration = Duration.zero,
+    this.minDuration = Duration.zero,
+    this.coverThumbnailsQuality = 10,
+    this.trimThumbnailsQuality = 10,
+    this.coverStyle = const CoverSelectionStyle(),
+    this.cropStyle = const CropGridStyle(),
+    TrimSliderStyle? trimStyle,
+  })  : _video = VideoPlayerController.file(File(
+          // https://github.com/flutter/flutter/issues/40429#issuecomment-549746165
+          Platform.isIOS ? Uri.encodeFull(file.path) : file.path,
+        )),
+        path = file.path,
         trimStyle = trimStyle ?? TrimSliderStyle(),
         assert(maxDuration > minDuration,
             'The maximum duration must be bigger than the minimum duration');
@@ -382,7 +401,7 @@ class VideoEditorController extends ChangeNotifier {
   /// Generate cover thumbnail at [startTrim] time in milliseconds
   void generateDefaultCoverThumbnail() async {
     final defaultCover = await generateSingleCoverThumbnail(
-      uri.toString(),
+      path,
       timeMs: startTrim.inMilliseconds,
       quality: coverThumbnailsQuality,
     );
