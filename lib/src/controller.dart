@@ -40,6 +40,8 @@ class VideoEditorController extends ChangeNotifier {
   /// Video from [Uri].
   final String path;
 
+  final String? alternativeTrimThumbnailPath;
+
   /// Constructs a [VideoEditorController] that edits a video from a file.
   ///
   /// The [Uri] argument must not be null.
@@ -51,6 +53,7 @@ class VideoEditorController extends ChangeNotifier {
     this.trimThumbnailsQuality = 10,
     this.coverStyle = const CoverSelectionStyle(),
     this.cropStyle = const CropGridStyle(),
+    this.alternativeTrimThumbnailPath,
     TrimSliderStyle? trimStyle,
   })  : _video = VideoPlayerController.networkUrl(uri),
         path = uri.toString(),
@@ -66,6 +69,7 @@ class VideoEditorController extends ChangeNotifier {
     this.trimThumbnailsQuality = 10,
     this.coverStyle = const CoverSelectionStyle(),
     this.cropStyle = const CropGridStyle(),
+    this.alternativeTrimThumbnailPath,
     TrimSliderStyle? trimStyle,
   })  : _video = VideoPlayerController.file(File(
           // https://github.com/flutter/flutter/issues/40429#issuecomment-549746165

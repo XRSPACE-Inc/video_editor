@@ -9,7 +9,8 @@ Stream<List<Uint8List>> generateTrimThumbnails(
   VideoEditorController controller, {
   required int quantity,
 }) async* {
-  final String path = controller.path;
+  final String path =
+      controller.alternativeTrimThumbnailPath ?? controller.path;
   final double eachPart = controller.videoDuration.inMilliseconds / quantity;
   List<Uint8List> byteList = [];
 
